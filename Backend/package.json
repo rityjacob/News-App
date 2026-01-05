@@ -1,0 +1,23 @@
+{
+  "name": "news-app",
+  "version": "1.0.0",
+  "description": "news website",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server",
+    "dev": "node --watch server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rityjacob/News-App.git"
+  },
+  "author": "rj",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rityjacob/News-App/issues"
+  },
+  "homepage": "https://github.com/rityjacob/News-App#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
