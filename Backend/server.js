@@ -1,5 +1,10 @@
 const express = require('express');
-const logger = require('./Logger/logger');
+const logger = require('./Middleware/logger');
+const { route } = require('./Route/route');
+const errorHandler = require('./Middleware/error');
+const invalidRoute = require('./Middleware/issue');
+
+
 
 const app = express();
 PORT = process.env.PORT || 8000
@@ -8,14 +13,16 @@ PORT = process.env.PORT || 8000
 app.use(express.json());
 
 //logger
-app.use(logger)
+app.use(logger);
 
 //Route
+app.use('/', route);
 
 
-app.get('/api/register',(req,res) =>{
-    res.send("hello news appp");
-})
+// Error handler
+app.use(invalidRoute);
+app.use(errorHandler);
+
 
 app.listen(PORT, () => console.log(`Server running in  PORT: ${PORT}`));
 
