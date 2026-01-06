@@ -1,6 +1,6 @@
 const express = require('express');
 const logger = require('./Middleware/logger');
-const { route } = require('./Route/route');
+const route = require('./Route/route');
 const errorHandler = require('./Middleware/error');
 const invalidRoute = require('./Middleware/issue');
 
