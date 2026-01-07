@@ -56,9 +56,12 @@ form.addEventListener('click', async (e)=>{
     const dobInput = document.querySelector('dob');
 
 
+    const username = usernameInput.value.trim();
+    const email = emailInput.vlaue.trim();
+    const mobNo = mobNoInput.value.trim();
+    const dob = dobInput.vlaue.trim();
 
-
-    if(!username||password||rePass||email||mobNo||dob){
+    if(!username||password||email||mobNo||dob){
         alert(`All fields are required`);
         return;
     }
@@ -76,11 +79,19 @@ form.addEventListener('click', async (e)=>{
 
         if(response.ok){
             alert(`Registered successfully`);
+
+            usernameInput.value = '';
+            passwordInput.value ='';
+            rePass.vlaue = '';
+            emailInput.value='';
+            mobNoInput.value='';
+            dobInput.value = '';
+        }else{
+            alert(`Registration Unsuccesful. Please try again`)
         }
 
-
-
-    }catch{
-
+        
+    }catch(error){
+        alert(`An error occured: ${error.message}`);
     }
 });
