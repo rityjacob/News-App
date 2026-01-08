@@ -4,8 +4,8 @@
   "description": "news website",
   "main": "server.js",
   "scripts": {
-    "start": "node server",
-    "dev": "node --watch --env-file=.env server"
+    "start": "node server.js",
+    "dev": "node --watch --env-file=.env server.js"
   },
   "repository": {
     "type": "git",

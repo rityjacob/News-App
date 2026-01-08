@@ -4,6 +4,6 @@ const { regUser } = require ('../Controllers/postControllers');
 
 
 // Register User
-router.get('/api/register',regUser);
+router.post('/api/register',regUser);
 
 module.exports = router;
