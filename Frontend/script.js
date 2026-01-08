@@ -18,6 +18,9 @@ form.addEventListener("submit", function (e) {
     let age = todayDate.getFullYear() - dob.getFullYear();
     const monthDiff = todayDate.getMonth() - dob.getMonth();
 
+    const mobValue = mobno.value.trim();
+    const isValidMobile = /^\d{10,15}$/.test(mobValue);
+
     if (
     monthDiff < 0 ||
     (monthDiff === 0 && todayDate.getDate() < dob.getDate())
@@ -32,43 +35,36 @@ form.addEventListener("submit", function (e) {
     dobError.textContent = "";
     }
 
-    if (!mobno.isInteger){
-        e.preventDefault();
-    mobError.textContent = "Mobile number must be integer";
-    } else {
-    mobError.textContent = "";
+    if (!isValidMobile) {
+    e.preventDefault();
+    mobError.textContent = "Mobile number must contain only digits (10–15).";
     }
 });
 
 
-form.addEventListener('click', async (e)=>{
+form.addEventListener('submit', async (e)=>{
     e.preventDefault();
 
-    const usernameInput = document.querySelector('#username');
-    const passwordInput = document.querySelector('#password');
-    const rePass = document.querySelector('#confirmPassword');
-    if(passwordInput !== rePass){
-        alert(`Password doesnt match, please reenter`);
-        return;
-    }
-    const emailInput = document.querySelector('#email');
-    const mobNoInput = document.querySelector('mobileno');
-    const dobInput = document.querySelector('dob');
+    const username = document.querySelector("#username").value.trim();
+    const password = document.querySelector("#password").value.trim();
+    const confirmPassword = document.querySelector("#confirmPassword").value.trim();
+    const email = document.querySelector("#email").value.trim();
+    const mobNo = document.querySelector("#mobileno").value.trim();
+    const dob = document.querySelector("#dob").value.trim();
 
+  if (password !== confirmPassword) {
+    alert("Password doesn't match, please re-enter");
+    return;
+  }
 
-    const username = usernameInput.value.trim();
-    const email = emailInput.vlaue.trim();
-    const mobNo = mobNoInput.value.trim();
-    const dob = dobInput.vlaue.trim();
-
-    if(!username||password||email||mobNo||dob){
-        alert(`All fields are required`);
-        return;
-    }
+  if (!username || !password || !email || !mobNo || !dob) {
+    alert("All fields are required");
+    return;
+  }
     
-    formData = {username,password,email,mobNo,dob};
+    formData = {username,password,email,mobno: mobNo,dob};
 
-    const apiUrl = 'http://localhost:5001/api/register/'
+    const apiUrl = 'http://localhost:5000/api/register'
 
     try{
         const response = await fetch(apiUrl,{
