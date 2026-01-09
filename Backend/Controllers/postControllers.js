@@ -1,11 +1,12 @@
 // const PrismaClient = require('@prisma/client');
-import {PrismaClient} from '@prisma/client'
+const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 // Register Users
 // /api/register
 
-export const regUser = async (req,res,next) => {
+
+const regUser = async (req,res,next) => {
     console.log(`Incoming req for new user`);
 
     const {username,password,email,mobno,dob} = req.body;
@@ -33,3 +34,5 @@ export const regUser = async (req,res,next) => {
     // }
     
 }
+
+module.exports = {regUser};

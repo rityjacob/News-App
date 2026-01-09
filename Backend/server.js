@@ -6,14 +6,30 @@ const invalidRoute = require('./Middleware/issue');
 
 
 
+PORT = process.env.PORT 
 const app = express();
-PORT = process.env.PORT || 8000
 
 
-app.use(express.json());
 
 //logger
 app.use(logger);
+
+const cors = require("cors");
+
+app.use(cors({
+  origin: "*", // or "*" for dev
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+}));
+
+
+app.use((req, res, next) => {
+  if (req.method === "OPTIONS") return res.sendStatus(204);
+  next();
+});
+
+
+app.use(express.json());
 
 //Route
 app.use('/', route);
