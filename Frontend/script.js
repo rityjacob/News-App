@@ -64,7 +64,7 @@ form.addEventListener('submit', async (e)=>{
     
     formData = {username,password,email,mobno: mobNo,dob};
 
-    const apiUrl = 'http://localhost:5000/api/register'
+    const apiUrl = 'http://localhost:5001/api/register'
 
     try{
         const response = await fetch(apiUrl,{
