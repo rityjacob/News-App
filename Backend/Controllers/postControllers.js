@@ -32,7 +32,7 @@ const regUser = async (req,res,next) => {
     }
     console.log(req.body);
     
-    return res.status(200).json({ success: true, msg: 'User data received', data: req.body });
+    return res.status(200).json({ success: true, msg: 'User data received', data: req.body});
     
 
     // try{
