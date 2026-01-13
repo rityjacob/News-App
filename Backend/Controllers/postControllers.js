@@ -43,4 +43,8 @@ const regUser = async (req,res,next) => {
     
 }
 
-module.exports = {regUser};
+const userLogin = async (req,res)=>{
+    response.json('Login')
+}
+
+module.exports = {regUser, userLogin};
