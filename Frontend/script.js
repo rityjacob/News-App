@@ -1,4 +1,3 @@
-
 const dobInput = document.getElementById("dob");
 const dobError = document.getElementById("dobError");
 const form = document.getElementById("regForm");
@@ -76,12 +75,15 @@ form.addEventListener('submit', async (e)=>{
         if(response.ok){
             alert(`Registered successfully`);
 
-            usernameInput.value = '';
-            passwordInput.value ='';
-            rePass.vlaue = '';
-            emailInput.value='';
-            mobNoInput.value='';
-            dobInput.value = '';
+            username.value = '';
+            password.value ='';
+            confirmPassword.vlaue = '';
+            email.value='';
+            mobNo.value='';
+            dob.value = '';
+
+            window.location.href = "login.html"
+
         }else{
             alert(`Registration Unsuccesful. Please try again`)
         }
@@ -91,3 +93,5 @@ form.addEventListener('submit', async (e)=>{
         alert(`An error occured: ${error.message}`);
     }
 });
+
+
