@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt')
 const { PrismaClient } = require('@prisma/client');
 const { post } = require('../Route/route');
 const prisma = new PrismaClient();
-const {createToken} = require('../JWT');
+const {createToken, validateToken} = require('../JWT');
 // Register Users
 // /api/register
 
@@ -82,4 +82,11 @@ const userLogin = async (req,res)=>{
     
 }
 
-module.exports = {regUser, userLogin};
+// Home page
+// /api/homePage
+
+const homePage = async (req,res) =>{
+    res.json("Homea Page")
+}
+
+module.exports = {regUser, userLogin, homePage};
