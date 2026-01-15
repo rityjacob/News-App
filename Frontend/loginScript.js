@@ -3,7 +3,6 @@ const loginForm = document.getElementById('loginForm');
 
 
 loginForm.addEventListener('submit', async (e) =>{
-    console.log('test 1');
     
     e.preventDefault();
 
@@ -20,7 +19,7 @@ loginForm.addEventListener('submit', async (e) =>{
             body: JSON.stringify(loginData),
         });
         if(response.ok){
-            alert('Loggedin successfully')
+            alert('Logged In!')
 
             username.value = '';
             password.value = '';
