@@ -46,7 +46,7 @@ const regUser = async (req,res,next) => {
 // api/login
 const userLogin = async (req,res)=>{
     if(!req.body){
-        return res.status(400).json({success: false, msg:'All fields are required'});
+        return res.status(400).json({success : false, msg : 'All fields are required'});
     }
 
     console.log(`Incoming request for new login`);
