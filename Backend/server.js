@@ -3,7 +3,7 @@ const logger = require('./Middleware/logger');
 const route = require('./Route/route');
 const errorHandler = require('./Middleware/error');
 const invalidRoute = require('./Middleware/issue');
-
+const cookieParser = require("cookie-parser");
 
 
 PORT = process.env.PORT 
@@ -30,7 +30,7 @@ app.use((req, res, next) => {
 
 
 app.use(express.json());
-
+app.use(cookieParser());
 //Route
 app.use('/', route);
 

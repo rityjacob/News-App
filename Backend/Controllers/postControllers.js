@@ -1,10 +1,9 @@
 const bcrypt = require('bcrypt')
 
-// const PrismaClient = require('@prisma/client');
 const { PrismaClient } = require('@prisma/client');
 const { post } = require('../Route/route');
 const prisma = new PrismaClient();
-
+const {createToken} = require('../JWT');
 // Register Users
 // /api/register
 
@@ -68,6 +67,13 @@ const userLogin = async (req,res)=>{
     if(!match){
         return res.status(400).json({error: "Wrong password"});
     } else{
+
+        accessToken = createToken(user)
+        
+        res.cookie("access-token", accessToken,{
+            maxAge: 60*60
+        });
+
         return res.status(200).json({success: true, msg:'Log in sccess'});
     }
     
