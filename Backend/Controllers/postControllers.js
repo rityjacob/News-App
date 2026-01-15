@@ -44,6 +44,7 @@ const regUser = async (req,res,next) => {
     
 }
 
+// api/login
 const userLogin = async (req,res)=>{
     if(!req.body){
         return res.status(400).json({success: false, msg:'All fields are required'})
@@ -53,7 +54,11 @@ const userLogin = async (req,res)=>{
 
     const {username,password} = req.body;
 
-    console.log(req.body);
+    const user = await prisma.user.findUnique({
+        where: {username},
+    })
+    console.log(user);
+    
     res.status(200).json(post)
     
 
