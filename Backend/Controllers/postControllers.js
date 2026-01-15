@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt')
 
 // const PrismaClient = require('@prisma/client');
 const { PrismaClient } = require('@prisma/client');
+const { post } = require('../Route/route');
 const prisma = new PrismaClient();
 
 // Register Users
@@ -44,7 +45,19 @@ const regUser = async (req,res,next) => {
 }
 
 const userLogin = async (req,res)=>{
-    response.json('Login')
+    if(!req.body){
+        return res.status(400).json({success: false, msg:'All fields are required'})
+    }
+
+    console.log(`Incoming request for new login`);
+
+    const {username,password} = req.body;
+
+    console.log(req.body);
+    res.status(200).json(post)
+    
+
+    
 }
 
 module.exports = {regUser, userLogin};
