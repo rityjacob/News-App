@@ -71,7 +71,8 @@ const userLogin = async (req,res)=>{
         accessToken = createToken(user)
         
         res.cookie("access-token", accessToken,{
-            maxAge: 60*60
+            maxAge: 60*60*1000,
+            httpOnly: true
         });
 
         return res.status(200).json({success: true, msg:'Log in sccess'});
@@ -86,7 +87,7 @@ const userLogin = async (req,res)=>{
 // /api/homePage
 
 const homePage = async (req,res) =>{
-    res.json("Homea Page")
+    res.json("Home Page")
 }
 
 module.exports = {regUser, userLogin, homePage};

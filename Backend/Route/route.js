@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { regUser, userLogin, homePage } = require ('../Controllers/postControllers');
-
+const {validateToken} = require('../JWT')
 
 // Register User
 router.post('/api/register',regUser);
@@ -10,6 +10,6 @@ router.post('/api/register',regUser);
 router.post('/api/login/',userLogin);
 
 // Home Page
-router.post('/api/homePage',homePage)
+router.get('/api/homePage',validateToken,homePage)
 
 module.exports = router;

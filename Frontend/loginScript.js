@@ -19,7 +19,6 @@ loginForm.addEventListener('submit', async (e) =>{
             body: JSON.stringify(loginData),
         });
         if(response.ok){
-            alert('Logged In!')
 
             username.value = '';
             password.value = '';
