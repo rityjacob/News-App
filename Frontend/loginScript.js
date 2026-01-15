@@ -23,6 +23,8 @@ loginForm.addEventListener('submit', async (e) =>{
 
             username.value = '';
             password.value = '';
+
+            window.location.href = 'home.html';
         }
         else{
             alert ('Login Unsuccesful')
