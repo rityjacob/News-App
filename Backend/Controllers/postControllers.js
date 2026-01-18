@@ -72,7 +72,8 @@ const userLogin = async (req,res)=>{
         
         res.cookie("access-token", accessToken,{
             maxAge: 60*60*1000,
-            httpOnly: true
+            httpOnly: true,
+            path: '/'
         });
 
         return res.status(200).json({success: true, msg:'Log in sccess'});

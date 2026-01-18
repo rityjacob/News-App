@@ -17,9 +17,18 @@ app.use(logger);
 const cors = require("cors");
 
 app.use(cors({
-  origin: "*", // or "*" for dev
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    if (origin.startsWith('http://localhost') || 
+        origin.startsWith('http://127.0.0.1') ||
+        origin === 'null') {
+      return callback(null, true);
+    }
+    callback(new Error('Not allowed by CORS'));
+  },
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true
 }));
 
 
