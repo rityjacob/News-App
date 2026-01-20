@@ -18,17 +18,22 @@ const cors = require("cors");
 
 app.use(cors({
   origin: function (origin, callback) {
-    if (!origin) return callback(null, true);
-    if (origin.startsWith('http://localhost') || 
-        origin.startsWith('http://127.0.0.1') ||
-        origin === 'null') {
+    // For requests with credentials, we must return the exact origin (not wildcard)
+    if (!origin) {
+      // Allow requests with no origin (like mobile apps or Postman)
       return callback(null, true);
+    }
+    if (origin.startsWith('http://localhost') || 
+        origin.startsWith('http://127.0.0.1')) {
+      // Return the exact origin for credential requests
+      return callback(null, origin);
     }
     callback(new Error('Not allowed by CORS'));
   },
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true
+  allowedHeaders: ["Content-Type", "Authorization", "Cookie"],
+  credentials: true,
+  exposedHeaders: ["Set-Cookie"]
 }));
 
 

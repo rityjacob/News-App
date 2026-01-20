@@ -70,13 +70,21 @@ const userLogin = async (req,res)=>{
 
         accessToken = createToken(user)
         
-        res.cookie("access-token", accessToken,{
+        // Set cookie (for same-origin requests)
+        const cookieOptions = {
             maxAge: 60*60*1000,
             httpOnly: true,
-            path: '/'
+            secure: false,
+            path: '/',
+        };
+        res.cookie("access-token", accessToken, cookieOptions);
+        
+        // Also send token in response body for localStorage (for cross-port localhost)
+        return res.status(200).json({
+            success: true, 
+            msg:'Log in success',
+            token: accessToken // Send token for localStorage storage
         });
-
-        return res.status(200).json({success: true, msg:'Log in sccess'});
     }
     
     
