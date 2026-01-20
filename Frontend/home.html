@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>News App - Home</title>
+  <title>WorldLens</title>
   <style>
     * {
       margin: 0;
@@ -15,13 +15,124 @@
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
       background: linear-gradient(135deg, #0a0e27 0%, #1a1d3a 50%, #0a0e27 100%);
       min-height: 100vh;
-      padding: 20px;
+      padding: 0;
       color: #333;
+    }
+
+    /* Header Ribbon */
+    .header-ribbon {
+      background: linear-gradient(135deg, #1a1d3a 0%, #2a2d4a 100%);
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .page-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #ffffff;
+      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+      letter-spacing: -0.5px;
+    }
+
+    .user-section {
+      position: relative;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: background-color 0.2s ease;
+    }
+
+    .user-info:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+    }
+
+    .username {
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    .dropdown-arrow {
+      color: #ffffff;
+      font-size: 0.8rem;
+      transition: transform 0.2s ease;
+    }
+
+    .user-info.active .dropdown-arrow {
+      transform: rotate(180deg);
+    }
+
+    .logout-menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      min-width: 150px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.2s ease;
+    }
+
+    .logout-menu.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .logout-button {
+      padding: 12px 20px;
+      color: #333;
+      text-decoration: none;
+      display: block;
+      transition: background-color 0.2s ease;
+      border-radius: 8px;
+      cursor: pointer;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    .logout-button:hover {
+      background-color: #f3f4f6;
+      color: #dc2626;
     }
 
     .rss-rotator {
       max-width: 1200px;
       margin: 0 auto;
+      padding: 40px 20px;
     }
 
     .title {
@@ -104,6 +215,7 @@
       flex-grow: 1;
       display: -webkit-box;
       -webkit-line-clamp: 3;
+      line-clamp: 3;
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
@@ -121,6 +233,18 @@
 
     /* Responsive design */
     @media (max-width: 768px) {
+      .header-ribbon {
+        padding: 15px 20px;
+      }
+
+      .page-title {
+        font-size: 1.5rem;
+      }
+
+      .username {
+        display: none;
+      }
+
       .title {
         font-size: 2rem;
         margin-bottom: 30px;
@@ -131,8 +255,8 @@
         gap: 20px;
       }
 
-      body {
-        padding: 15px;
+      .rss-rotator {
+        padding: 20px 15px;
       }
     }
 
@@ -154,8 +278,23 @@
   </style>
 </head>
 <body>
+  <!-- Header Ribbon -->
+  <header class="header-ribbon">
+    <div class="page-title">WorldLens</div>
+    <div class="user-section">
+      <div class="user-info" id="userInfo">
+        <div class="user-avatar" id="userAvatar">U</div>
+        <span class="username" id="username">Loading...</span>
+        <span class="dropdown-arrow">▼</span>
+      </div>
+      <div class="logout-menu" id="logoutMenu">
+        <button class="logout-button" id="logoutButton">Logout</button>
+      </div>
+    </div>
+  </header>
+
   <div class="rss-rotator">
-    <div class="title">News App</div>
+    <!-- <div class="title">Shejin</div> -->
     <ul id="item"></ul>
   </div>
 

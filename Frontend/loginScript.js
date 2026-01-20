@@ -20,7 +20,13 @@ loginForm.addEventListener('submit', async (e) =>{
             credentials: 'include',
         });
         if(response.ok){
-
+            const data = await response.json();
+            
+            // Store token in localStorage for cross-port requests
+            if(data.token) {
+                localStorage.setItem('access-token', data.token);
+            }
+            
             username.value = '';
             password.value = '';
 
