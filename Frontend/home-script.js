@@ -10,6 +10,7 @@ const loadXMLFeed = () => {
         return;
     }
     
+    
     // Set up headers with Authorization
     const headers = {
         'Content-Type': 'application/json',
@@ -44,7 +45,7 @@ const loadXMLFeed = () => {
         let parser = new DOMParser();
         let xml = parser.parseFromString(data,"application/xml");
         
-        // Check for XML parsing errors
+        
         const parserError = xml.querySelector('parsererror');
         if (parserError) {
             throw new Error('Failed to parse XML feed');
@@ -118,9 +119,9 @@ function displayUserInfo() {
         }
         
         if (avatarElement && decoded.username) {
-            // Set avatar to first letter of username
+            
             avatarElement.textContent = decoded.username.charAt(0).toUpperCase();
-            // Set avatar color based on username
+            
             avatarElement.style.background = getAvatarColor(decoded.username);
         }
     }
@@ -134,14 +135,14 @@ function setupLogout() {
 
     if (!userInfo || !logoutMenu || !logoutButton) return;
 
-    // Toggle dropdown menu
+
     userInfo.addEventListener('click', (e) => {
         e.stopPropagation();
         userInfo.classList.toggle('active');
         logoutMenu.classList.toggle('show');
     });
 
-    // Close dropdown when clicking outside
+   
     document.addEventListener('click', (e) => {
         if (!userInfo.contains(e.target) && !logoutMenu.contains(e.target)) {
             userInfo.classList.remove('active');
@@ -149,7 +150,7 @@ function setupLogout() {
         }
     });
 
-    // Handle logout
+
     logoutButton.addEventListener('click', () => {
         localStorage.removeItem('access-token');
         window.location.href = 'login.html';
