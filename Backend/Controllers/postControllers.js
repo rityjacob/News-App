@@ -5,6 +5,9 @@ const { post } = require('../Route/route');
 const prisma = new PrismaClient();
 const {createToken, validateToken} = require('../JWT');
 // Register Users
+
+
+
 // /api/register
 
 
@@ -43,7 +46,7 @@ const regUser = async (req,res,next) => {
     
 }
 
-// api/login
+// /api/login
 const userLogin = async (req,res)=>{
     if(!req.body){
         return res.status(400).json({success : false, msg : 'All fields are required'});
