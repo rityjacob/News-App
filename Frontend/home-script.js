@@ -89,9 +89,29 @@ const setupCategoryRibbon = () => {
     });
 }
 
+const handleLogout = async () => {
+    try {
+        // Clear the cookie by setting it to expire
+        document.cookie = 'access-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        
+        // Redirect to login page
+        window.location.href = 'login.html';
+    } catch (error) {
+        console.error('Logout error:', error);
+        // Still redirect even if there's an error
+        window.location.href = 'login.html';
+    }
+};
+
 document.addEventListener("DOMContentLoaded", () => {
     setupCategoryRibbon();
     loadXMLFeed(DEFAULT_CATEGORY);
+    
+    // Setup logout button
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', handleLogout);
+    }
 });
 
 
