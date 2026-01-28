@@ -7,18 +7,12 @@ const createToken = (user) => {
 };
 
 const validateToken = (req,res,next) =>{
-    // Check for token in Authorization header first (for localStorage approach)
-    let accessToken = req.headers.authorization;
-    if (accessToken && accessToken.startsWith('Bearer ')) {
-        accessToken = accessToken.substring(7);
-    } else {
-        // Fall back to cookie
-        accessToken = req.cookies["access-token"];
-    }
-    
-    if(!accessToken) {
+    console.log('Request headers cookie:', req.headers.cookie);
+    console.log('Cookies received:', req.cookies);
+    console.log('Access token:', req.cookies["access-token"]);
+    const accessToken = req.cookies["access-token"]
+    if(!accessToken)
         return res.status(400).json({error:'User not authenticated'});
-    }
 
     try{
         const validToken = verify(accessToken, process.env.secretKey)

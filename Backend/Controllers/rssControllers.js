@@ -3,7 +3,25 @@ const { URL } = require('url');
 
 const getRSS = async(req,res) =>{
 try {
-    const rssUrl = "https://www.cbc.ca/webfeed/rss/rss-world";
+    const category = String(req.query.category || 'world').toLowerCase();
+
+    const FEEDS_BY_CATEGORY = {
+      world: 'https://rss.nytimes.com/services/xml/rss/nyt/World.xml',
+      politics: 'https://www.cbc.ca/webfeed/rss/rss-politics',
+      business: 'https://www.cbc.ca/webfeed/rss/rss-business',
+      health: 'https://www.cbc.ca/webfeed/rss/rss-health',
+      sports: 'https://www.cbc.ca/webfeed/rss/rss-sports',
+      technology: 'https://www.cbc.ca/webfeed/rss/rss-technology',
+      entertainment:'https://www.cbc.ca/webfeed/rss/rss-arts',
+      
+    };
+
+    const rssUrl = FEEDS_BY_CATEGORY[category];
+    if (!rssUrl) {
+      return res.status(400).json({
+        error: 'Invalid category. Supported: world, politics, business, health, sports',
+      });
+    }
     const url = new URL(rssUrl);
     
     const options = {

@@ -19,9 +19,11 @@ const cors = require("cors");
 app.use(cors({
   origin: function (origin, callback) {
     // For requests with credentials, we must return the exact origin (not wildcard)
-    if (!origin) {
-      // Allow requests with no origin (like mobile apps or Postman)
-      return callback(null, true);
+    // Browsers load local files with Origin: null (literal string "null").
+    // Some non-browser clients omit Origin entirely.
+    if (!origin || origin === 'null') {
+      // With credentials=true we cannot use '*', so explicitly allow the 'null' origin.
+      return callback(null, 'null');
     }
     if (origin.startsWith('http://localhost') || 
         origin.startsWith('http://127.0.0.1')) {
@@ -31,9 +33,9 @@ app.use(cors({
     callback(new Error('Not allowed by CORS'));
   },
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization", "Cookie"],
+  allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
-  exposedHeaders: ["Set-Cookie"]
+  exposedHeaders: ["Set-Cookie"] // Expose Set-Cookie header
 }));
 
 

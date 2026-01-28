@@ -1,4 +1,9 @@
-loginUrl = 'http://localhost:5001/api/login/'
+const API_BASE = (() => {
+    const host = window.location && window.location.hostname ? window.location.hostname : 'localhost';
+    return `http://${host}:5001`;
+})();
+
+const loginUrl = `${API_BASE}/api/login/`;
 const loginForm = document.getElementById('loginForm');
 
 
@@ -6,8 +11,10 @@ loginForm.addEventListener('submit', async (e) =>{
     
     e.preventDefault();
 
-    const username = document.querySelector('#username').value.trim();
-    const password = document.querySelector('#password').value.trim();
+    const usernameInput = document.querySelector('#username');
+    const passwordInput = document.querySelector('#password');
+    const username = (usernameInput?.value || '').trim();
+    const password = (passwordInput?.value || '').trim();
 
     loginData = {username,password}
 
@@ -20,15 +27,11 @@ loginForm.addEventListener('submit', async (e) =>{
             credentials: 'include',
         });
         if(response.ok){
-            const data = await response.json();
+            // Wait a moment to ensure cookie is set before redirect
+            await new Promise(resolve => setTimeout(resolve, 100));
             
-            // Store token in localStorage for cross-port requests
-            if(data.token) {
-                localStorage.setItem('access-token', data.token);
-            }
-            
-            username.value = '';
-            password.value = '';
+            if (usernameInput) usernameInput.value = '';
+            if (passwordInput) passwordInput.value = '';
 
             window.location.href = 'home.html';
         }
