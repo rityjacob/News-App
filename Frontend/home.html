@@ -204,10 +204,13 @@
         font-size: 0.9rem;
       }
 
-      #logoutBtn {
+      .user-dropdown {
+        margin-left: 10px;
+      }
+
+      .user-dropdown-btn {
         padding: 8px 16px;
         font-size: 0.85rem;
-        margin-left: 10px;
       }
 
       .rss-rotator > div:first-child {
@@ -222,10 +225,94 @@
       }
     }
 
-    #logoutBtn:hover {
+    /* User dropdown styles */
+    .user-dropdown {
+      position: relative;
+      display: inline-block;
+      margin-left: 20px;
+    }
+
+    .user-dropdown-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #ffffff;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .user-dropdown-btn:hover {
       background: rgba(255, 255, 255, 0.2);
       border-color: rgba(255, 255, 255, 0.5);
       transform: translateY(-1px);
+    }
+
+    .user-dropdown-btn::after {
+      content: '▼';
+      font-size: 0.7rem;
+      transition: transform 0.2s ease;
+    }
+
+    .user-dropdown-btn.active::after {
+      transform: rotate(180deg);
+    }
+
+    .user-dropdown-menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      background: rgba(26, 29, 58, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      min-width: 150px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.2s ease;
+      z-index: 1000;
+    }
+
+    .user-dropdown-menu.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .user-dropdown-item {
+      display: block;
+      width: 100%;
+      padding: 12px 20px;
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 0.2s ease;
+      border: none;
+      background: none;
+      text-align: left;
+    }
+
+    .user-dropdown-item:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .user-dropdown-item:first-child {
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+    }
+
+    .user-dropdown-item:last-child {
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
     }
   </style>
 </head>
@@ -233,7 +320,14 @@
   <div class="rss-rotator">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; width: 100%;">
       <div class="title" style="margin-bottom: 0; flex: 1;">WorldLens</div>
-      <button id="logoutBtn" style="background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3); color: #ffffff; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.95rem; transition: all 0.2s ease; margin-left: 20px;">Logout</button>
+      <div class="user-dropdown">
+        <button class="user-dropdown-btn" id="userDropdownBtn">
+          <span id="usernameDisplay">User</span>
+        </button>
+        <div class="user-dropdown-menu" id="userDropdownMenu">
+          <button class="user-dropdown-item" id="logoutOption">Logout</button>
+        </div>
+      </div>
     </div>
     <div class="category-ribbon" id="categoryRibbon" aria-label="News categories">
       <button class="chip" type="button" data-category="world" aria-pressed="true">World</button>

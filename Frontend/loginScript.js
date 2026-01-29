@@ -27,6 +27,12 @@ loginForm.addEventListener('submit', async (e) =>{
             credentials: 'include',
         });
         if(response.ok){
+            // Get token from response and store in localStorage
+            const data = await response.json();
+            if (data.token) {
+                localStorage.setItem('token', data.token);
+            }
+            
             // Wait a moment to ensure cookie is set before redirect
             await new Promise(resolve => setTimeout(resolve, 100));
             

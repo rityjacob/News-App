@@ -89,10 +89,64 @@ const setupCategoryRibbon = () => {
     });
 }
 
+// Decode JWT token to get username
+const decodeJWT = (token) => {
+    try {
+        // JWT tokens have 3 parts separated by dots: header.payload.signature
+        const parts = token.split('.');
+        if (parts.length !== 3) {
+            return null;
+        }
+        
+        // Decode the payload (second part)
+        const payload = parts[1];
+        // Replace URL-safe characters and add padding if needed
+        const base64 = payload.replace(/-/g, '+').replace(/_/g, '/');
+        const decoded = JSON.parse(atob(base64));
+        
+        return decoded;
+    } catch (error) {
+        console.error('Error decoding JWT:', error);
+        return null;
+    }
+};
+
+// Get username from cookie
+const getUsername = () => {
+    // Try to get token from cookie
+    const cookies = document.cookie.split(';');
+    let token = null;
+    
+    for (let cookie of cookies) {
+        const [name, value] = cookie.trim().split('=');
+        if (name === 'access-token') {
+            token = value;
+            break;
+        }
+    }
+    
+    // If not in cookie, try localStorage (for cross-port scenarios)
+    if (!token) {
+        token = localStorage.getItem('token');
+    }
+    
+    if (token) {
+        const decoded = decodeJWT(token);
+        if (decoded && decoded.username) {
+            return decoded.username;
+        }
+    }
+    
+    return 'User';
+};
+
 const handleLogout = async () => {
     try {
         // Clear the cookie by setting it to expire
         document.cookie = 'access-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        
+        // Clear localStorage token if present
+        localStorage.removeItem('token');
         
         // Redirect to login page
         window.location.href = 'login.html';
@@ -103,15 +157,48 @@ const handleLogout = async () => {
     }
 };
 
+const setupUserDropdown = () => {
+    const dropdownBtn = document.getElementById('userDropdownBtn');
+    const dropdownMenu = document.getElementById('userDropdownMenu');
+    const logoutOption = document.getElementById('logoutOption');
+    const usernameDisplay = document.getElementById('usernameDisplay');
+    
+    if (!dropdownBtn || !dropdownMenu || !logoutOption || !usernameDisplay) {
+        return;
+    }
+    
+    // Set username
+    const username = getUsername();
+    usernameDisplay.textContent = username;
+    
+    // Toggle dropdown on button click
+    dropdownBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        dropdownMenu.classList.toggle('show');
+        dropdownBtn.classList.toggle('active');
+    });
+    
+    // Close dropdown when clicking logout
+    logoutOption.addEventListener('click', (e) => {
+        e.stopPropagation();
+        dropdownMenu.classList.remove('show');
+        dropdownBtn.classList.remove('active');
+        handleLogout();
+    });
+    
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!dropdownBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
+            dropdownMenu.classList.remove('show');
+            dropdownBtn.classList.remove('active');
+        }
+    });
+};
+
 document.addEventListener("DOMContentLoaded", () => {
     setupCategoryRibbon();
     loadXMLFeed(DEFAULT_CATEGORY);
-    
-    // Setup logout button
-    const logoutBtn = document.getElementById('logoutBtn');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', handleLogout);
-    }
+    setupUserDropdown();
 });
 
 
